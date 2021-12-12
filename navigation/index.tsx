@@ -20,6 +20,10 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+
+  DarkTheme.colors.background = "#192734";
+  DarkTheme.colors.card = "#192734";
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}
