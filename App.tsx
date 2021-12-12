@@ -8,7 +8,7 @@ import {
   DefaultTheme as DefaultThemePaper,
 } from "react-native-paper";
 
-import PreferencesContext from './context/PreferencesContext';
+import { PreferencesContext } from './context';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
