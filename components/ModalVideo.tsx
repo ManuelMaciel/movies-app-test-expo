@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { Modal, IconButton } from "react-native-paper";
 import YoutubePlayer from "react-native-youtube-iframe";
 
-import { getVideoMovie } from "../api/movies";
+import { getVideoMovie } from "../api";
 
 export const ModalVideo = ({ showVideo, setShowVideo, movieID }: any) => {
   const [video, setVideo]: any = useState(null);
