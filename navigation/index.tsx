@@ -24,6 +24,9 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
   DarkTheme.colors.background = "#192734";
   DarkTheme.colors.card = "#192734";
 
+  DefaultTheme.colors.background = "#ccd7e2";
+  DefaultTheme.colors.card = "#ccd7e2";
+
   return (
     <NavigationContainer
       linking={LinkingConfiguration}

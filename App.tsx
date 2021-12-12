@@ -1,13 +1,14 @@
 
 import { StatusBar } from 'expo-status-bar';
 import React, { useMemo, useState } from "react";
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+// import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
   Provider as PaperProvider,
   DarkTheme as DarkThemePaper,
   DefaultTheme as DefaultThemePaper,
 } from "react-native-paper";
 
+import PreferencesContext from './context/PreferencesContext';
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
@@ -38,10 +39,12 @@ export default function App() {
     return null;
   } else {
     return (
-      <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
-      </SafeAreaProvider>
+      <PreferencesContext.Provider value={preference}>
+        <PaperProvider theme={theme === "dark" ? DarkThemePaper : DefaultThemePaper}>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </PaperProvider>
+    </PreferencesContext.Provider>
     );
   }
 }
