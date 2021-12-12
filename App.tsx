@@ -10,8 +10,7 @@ import {
 
 import { PreferencesContext } from './context';
 import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import { Navigation } from './navigation';
 
 export default function App() {
   const [theme, setTheme] = useState("dark");
@@ -33,7 +32,6 @@ export default function App() {
   );
 
   const isLoadingComplete = useCachedResources();
-  const colorScheme = useColorScheme();
 
   if (!isLoadingComplete) {
     return null;
@@ -41,7 +39,7 @@ export default function App() {
     return (
       <PreferencesContext.Provider value={preference}>
         <PaperProvider theme={theme === "dark" ? DarkThemePaper : DefaultThemePaper}>
-          <Navigation colorScheme={colorScheme} />
+          <Navigation/>
           <StatusBar />
         </PaperProvider>
     </PreferencesContext.Provider>
