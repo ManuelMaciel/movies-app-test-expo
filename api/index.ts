@@ -63,7 +63,7 @@ export const getGenreMovies = async (genreID: any) => {
   }
 }
 
-export const getMovieByI = async (movieID: any) => {
+export const getMovieByID = async (movieID: any) => {
   try {
     const url = `${process.env.APIHOST}/movie/${movieID}?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}`;
     const response = await fetch(url);
