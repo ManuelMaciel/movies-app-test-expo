@@ -1,118 +1,145 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import React, { useState } from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
-import { StyleSheet, View } from 'react-native';
-import { DrawerContentScrollView } from '@react-navigation/drawer';
-import { Drawer, Switch, TouchableRipple, Text } from "react-native-paper";
+import React, { useState } from "react";
+import { StyleSheet, View, Text } from "react-native";
+import { DrawerContentScrollView, createDrawerNavigator } from "@react-navigation/drawer";
+import { Drawer as DrawerPaper, Switch, TouchableRipple } from "react-native-paper";
+import { IconButton } from "react-native-paper";
+import { createStackNavigator } from "@react-navigation/stack";
 
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import TabOneScreen from '../screens/TabOneScreen';
-import TabTwoScreen from '../screens/TabTwoScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
-import LinkingConfiguration from './LinkingConfiguration';
-import usePreference from '../hooks/usePreferences';
+import usePreference from "../hooks/usePreferences";
+import { Home, Search, Popular, News, Movie } from '../screens'
 
-export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
+export const DrawerContent = ({ navigation }: any) => {
+  const [active, setActive] = useState("home");
+  const { theme, toggleTheme } = usePreference();
 
-  DarkTheme.colors.background = "#192734";
-  DarkTheme.colors.card = "#192734";
-
-  DefaultTheme.colors.background = "#ccd7e2";
-  DefaultTheme.colors.card = "#ccd7e2";
+  const onChangeScreen = (screen: any) => {
+    setActive(screen);
+    navigation.navigate(screen);
+  };
 
   return (
-    <NavigationContainer
-      linking={LinkingConfiguration}
-      theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <RootNavigator />
-    </NavigationContainer>
+    <DrawerContentScrollView>
+      <DrawerPaper.Section>
+        <DrawerPaper.Item
+          active={active === "home"}
+          label="Home"
+          onPress={() => onChangeScreen("home")}
+        />
+        <DrawerPaper.Item
+          active={active === "popular"}
+          label="Popular Movies"
+          onPress={() => onChangeScreen("popular")}
+        />
+        <DrawerPaper.Item
+          active={active === "news"}
+          label="New Movies"
+          onPress={() => onChangeScreen("news")}
+        />
+      </DrawerPaper.Section>
+      <DrawerPaper.Section title="Theme">
+        <TouchableRipple>
+          <View style={styles.preferences}>
+            <Text>Dark Theme</Text>
+            <Switch value={theme === "dark"} onValueChange={toggleTheme} />
+          </View>
+        </TouchableRipple>
+      </DrawerPaper.Section>
+    </DrawerContentScrollView>
   );
-}
+};
 
-/**
- * A root stack navigator is often used for displaying modals on top of all other content.
- * https://reactnavigation.org/docs/modal
- */
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
-function RootNavigator() {
-  return (
-    <Stack.Navigator>
-      <Stack.Screen name="Root" component={BottomTabNavigator} options={{ headerShown: false }} />
-      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-      <Stack.Group screenOptions={{ presentation: 'modal' }}>
-        <Stack.Screen name="Modal" component={ModalScreen} />
-      </Stack.Group>
-    </Stack.Navigator>
-  );
-}
+export const StackNavigation = ({ navigation }: any) => {
+  const buttonLeft = (screen: any) => {
+    switch (screen) {
+      case "search":
+      case "movie":
+        return <IconButton icon="arrow-left" onPress={() => navigation.goBack()} />;
+      default:
+        return <IconButton icon="menu" onPress={() => navigation.openDrawer()} />;
+    }
+  };
 
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={TabOneScreen}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-      <BottomTab.Screen
-        name="TabTwo"
-        component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+  const buttonRight = () => {
+    return (
+      <IconButton
+        icon="magnify"
+        onPress={() => {
+          navigation.navigate("search");
         }}
       />
-    </BottomTab.Navigator>
-  );
-}
+    );
+  };
 
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        component={Home}
+        name="home"
+        options={{
+          title: "Movie App Test",
+          headerLeft: () => buttonLeft("home"),
+          headerRight: () => buttonRight(),
+        }}
+      />
+      <Stack.Screen
+        component={Movie}
+        name="movie"
+        options={{
+          title: "",
+          headerTransparent: true,
+          headerLeft: () => buttonLeft("movie"),
+          headerRight: () => buttonRight(),
+        }}
+      />
+      <Stack.Screen
+        component={News}
+        name="news"
+        options={{
+          title: "Peliculas Nuevas",
+          headerLeft: () => buttonLeft("news"),
+          headerRight: () => buttonRight(),
+        }}
+      />
+      <Stack.Screen
+        component={Popular}
+        name="popular"
+        options={{
+          title: "Peliculas Populares",
+          headerLeft: () => buttonLeft("popular"),
+          headerRight: () => buttonRight(),
+        }}
+      />
+      <Stack.Screen
+        component={Search}
+        name="search"
+        options={{ title: "", headerTransparent: true, headerLeft: () => buttonLeft("search") }}
+      />
+    </Stack.Navigator>
+  );
+};
+
+const Drawer = createDrawerNavigator();
+
+export const Navigation = () => {
+  return (
+    <Drawer.Navigator
+      drawerContent={(props: any) => <DrawerContent {...props} />}
+      initialRouteName="app"
+    >
+      <Drawer.Screen component={StackNavigation} name="app" />
+    </Drawer.Navigator>
+  );
+};
+
+
+const styles = StyleSheet.create({
+  preferences: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+});
