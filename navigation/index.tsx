@@ -7,8 +7,11 @@ import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { ColorSchemeName, Pressable } from 'react-native';
+import { StyleSheet, View } from 'react-native';
+import { DrawerContentScrollView } from '@react-navigation/drawer';
+import { Drawer, Switch, TouchableRipple, Text } from "react-native-paper";
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -18,6 +21,7 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+import usePreference from '../hooks/usePreferences';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
 
