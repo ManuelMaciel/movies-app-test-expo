@@ -11,7 +11,7 @@ const { width } = Dimensions.get("window");
 
 const ITEM_WIDTH = Math.round(width * 0.7);
 
-export default function CarouselVertical({ data, navigation }: any) {
+export const CarouselVertical = ({ data, navigation }: any) => {
   return (
     <Carousel
       data={data}
