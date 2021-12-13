@@ -2,6 +2,7 @@ import React from "react";
 import { StyleSheet, View, Image, Dimensions, TouchableWithoutFeedback } from "react-native";
 import { Title } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
+import { IMGPATH } from '../utils/constants';
 
 const { width } = Dimensions.get("window");
 const ITEM_WIDTH = Math.round(width * 0.3);
@@ -27,7 +28,7 @@ function RenderItem({
   },
   navigation,
 }: any) {
-  const imageURL = `${process.env.IMGPATH}/w500${poster_path}`;
+  const imageURL = `${IMGPATH}/w500${poster_path}`;
 
   const onNavigation = () => {
     navigation.navigate("movie", { id });

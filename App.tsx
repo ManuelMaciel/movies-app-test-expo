@@ -1,5 +1,6 @@
 
 import { StatusBar } from 'expo-status-bar';
+import { registerRootComponent } from 'expo';
 import React, { useMemo, useState } from "react";
 // import { SafeAreaProvider } from 'react-native-safe-area-context';
 import {
@@ -46,3 +47,5 @@ export default function App() {
     );
   }
 }
+
+registerRootComponent(App);

@@ -1,8 +1,8 @@
-import 'dotenv';
+import { APIHOST, APIKEY, LANGUAGE } from '../utils/constants'
 
 export const getNewMovies = async (page = 1) => {
   try {
-    const url = `${process.env.APIHOST}/movie/now_playing?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}&page=${page}`;
+    const url = `${APIHOST}/movie/now_playing?api_key=${APIKEY}&language=${LANGUAGE}&page=${page}`;
 
     const response = await fetch(url);
     const result = await response.json();
@@ -17,7 +17,7 @@ export const getNewMovies = async (page = 1) => {
 
 export const getGenreMovie = async (genreID: any) => {
   try {
-    const url = `${process.env.APIHOST}/genre/movie/list?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}`;
+    const url = `${APIHOST}/genre/movie/list?api_key=${APIKEY}&language=${LANGUAGE}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -39,7 +39,7 @@ export const getGenreMovie = async (genreID: any) => {
 
 export const getAllGenres = async () => {
   try {
-    const url = `${process.env.APIHOST}/genre/movie/list?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}`;
+    const url = `${APIHOST}/genre/movie/list?api_key=${APIKEY}&language=${LANGUAGE}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -51,7 +51,7 @@ export const getAllGenres = async () => {
 
 export const getGenreMovies = async (genreID: any) => {
   try {
-    const url = `${process.env.APIHOST}/discover/movie?api_key=${process.env.APIKEY}&with_genres=${genreID}&language=${process.env.LANGUAGE}`;
+    const url = `${APIHOST}/discover/movie?api_key=${APIKEY}&with_genres=${genreID}&language=${LANGUAGE}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -65,7 +65,7 @@ export const getGenreMovies = async (genreID: any) => {
 
 export const getMovieByID = async (movieID: any) => {
   try {
-    const url = `${process.env.APIHOST}/movie/${movieID}?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}`;
+    const url = `${APIHOST}/movie/${movieID}?api_key=${APIKEY}&language=${LANGUAGE}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -79,7 +79,7 @@ export const getMovieByID = async (movieID: any) => {
 
 export const getVideoMovie = async (movieID: any) => {
   try {
-    const url = `${process.env.APIHOST}/movie/${movieID}/videos?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}`;
+    const url = `${APIHOST}/movie/${movieID}/videos?api_key=${APIKEY}&language=${LANGUAGE}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -93,7 +93,7 @@ export const getVideoMovie = async (movieID: any) => {
 
 export const getPopularMovies = async (page = 1) => {
   try {
-    const url = `${process.env.APIHOST}/movie/popular?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}&page=${page}`;
+    const url = `${APIHOST}/movie/popular?api_key=${APIKEY}&language=${LANGUAGE}&page=${page}`;
     const response = await fetch(url);
     const result = await response.json();
 
@@ -107,7 +107,7 @@ export const getPopularMovies = async (page = 1) => {
 
 export const searchMovies = async (search: string) => {
   try {
-    const url = `${process.env.APIHOST}/search/movie?api_key=${process.env.APIKEY}&language=${process.env.LANGUAGE}&query=${search}`;
+    const url = `${APIHOST}/search/movie?api_key=${APIKEY}&language=${LANGUAGE}&query=${search}`;
     const response = await fetch(url);
     const result = await response.json();
 

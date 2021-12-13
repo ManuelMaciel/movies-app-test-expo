@@ -4,6 +4,7 @@ import { Title } from "react-native-paper";
 import Carousel from "react-native-snap-carousel";
 import { map, size } from "lodash";
 
+import { IMGPATH } from '../utils/constants';
 import { getGenreMovies } from "../api";
 
 const { width } = Dimensions.get("window");
@@ -29,7 +30,7 @@ function RenderItem({
   navigation,
 }: any) {
   const [genres, setGenres] = useState(null);
-  const imageURL = `${process.env.IMGPATH}/w500${poster_path}`;
+  const imageURL = `${IMGPATH}/w500${poster_path}`;
 
   useEffect(() => {
     (async () => {
